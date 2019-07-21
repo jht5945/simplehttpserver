@@ -18,9 +18,9 @@ const DEFAULT_PORT: u16 = 8080u16;
 
 fn print_version() {
     print!(r#"simplehttpserver {}
-
 Copyright (C) 2019 Hatter Jiang.
 License MIT <https://opensource.org/licenses/MIT>
+
 Written by Hatter Jiang
 "#, VERSION);
 }
