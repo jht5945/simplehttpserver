@@ -1,7 +1,6 @@
 extern crate argparse;
-extern crate term;
+extern crate rust_util;
 
-mod util;
 mod http;
 
 use std::{
@@ -10,8 +9,8 @@ use std::{
 };
 
 use argparse::{ArgumentParser, StoreTrue, Store};
-use util::*;
 use http::*;
+use rust_util::*;
 
 const VERSION: &str = "0.1";
 const DEFAULT_ADDRESS: &str = "127.0.0.1";
