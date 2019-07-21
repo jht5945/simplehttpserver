@@ -1,7 +1,65 @@
 use std::{
+    collections::HashMap,
     io::{Read, Write},
     net::TcpStream,
 };
+
+use super::util::*;
+
+#[derive(Debug)]
+struct HttpRequestHeaders {
+    header_list: Vec<String>,
+    header_map: HashMap<String, Vec<String>>,
+}
+
+#[derive(Debug)]
+struct HttpRequest {
+    method: String,
+    path: String,
+    protocol: String,
+    headers: HttpRequestHeaders,
+}
+
+#[allow(dead_code)]
+impl HttpRequestHeaders {
+    pub fn new() -> HttpRequestHeaders {
+        HttpRequestHeaders {
+            header_list: Vec::new(),
+            header_map: HashMap::new(),
+        }
+    }
+
+    pub fn add_header(&mut self, h: String, n: String) {
+        match self.header_map.get_mut(&h) {
+            Some(nl) => nl.push(n),
+            None => {
+                let mut nl: Vec<String> = Vec::new();
+                self.header_list.push(h.clone());
+                nl.push(n);
+                self.header_map.insert(h, nl);
+            },
+        }
+    }
+
+    pub fn get_header(&self, h: &String) -> Option<&Vec<String>> {
+        self.header_map.get(h)
+    }
+
+    pub fn get_header_line(&self, h: &String) -> Option<&String> {
+        Some(&self.get_header(h)?[0])
+    }
+}
+
+#[allow(dead_code)]
+fn parse_http_request_from_read(_read: &Read) -> XResult<HttpRequest> {
+    // TODO ...
+    Ok(HttpRequest{
+        method: "GET".to_string(),
+        path: "/".to_string(),
+        protocol: "HTTP/1.0".to_string(),
+        headers: HttpRequestHeaders::new(),
+    })
+}
 
 // TODO  parse HTTP header ...
 fn handle_read(mut stream: &TcpStream) {

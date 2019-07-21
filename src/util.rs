@@ -1,4 +1,6 @@
 
+pub type XResult<T> = Result<T, Box<dyn std::error::Error>>;
+
 #[allow(dead_code)]
 pub enum MessageType { INFO, OK, WARN, ERROR, }
 
